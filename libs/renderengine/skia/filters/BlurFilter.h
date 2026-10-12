@@ -21,6 +21,7 @@
 #include <SkRuntimeEffect.h>
 #include <SkSurface.h>
 
+#include <cstdint>
 #include <string>
 
 #include "../compat/SkiaGpuContext.h"
@@ -89,6 +90,24 @@ private:
     const sk_sp<SkRuntimeEffect> mLiquidGlassEffect;
     const sk_sp<SkRuntimeEffect> mCosGlassEffect;
     bool mLiquidGlass = false;
+
+    // Liquid Glass's tunable values, read again only once a system property has changed.
+    struct GlassTuning {
+        float band;
+        float clarity;
+        float refraction;
+        float rim;
+        float slabSaturation;
+        float windowSaturation;
+        float slabGain;
+        float windowGain;
+        float slabLift;
+        float windowLift;
+        float edgeClear;
+        float curve;
+    };
+    GlassTuning mTuning{};
+    uint32_t mTuningSerial = UINT32_MAX;
 };
 
 } // namespace skia
